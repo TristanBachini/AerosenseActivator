@@ -1,19 +1,25 @@
 import tkinter as tk
+from tkinter import filedialog
 
-def greet():
-    name = entry.get()
-    label_result.config(text=f"Hello, {name}!")
+
+def select_file():
+    file_path = filedialog.askopenfilename(
+        title="Select a file",
+        filetypes=[("Excel files", "*.xlsx *.xls"), ("All files", "*.*")]
+    )
+    file_var.set(file_path) 
+    print(file_var.get())
 
 root = tk.Tk()
-root.title("Simple App")
+root.title("Aerosense Activator")
+root.geometry("800x600")
 
-entry = tk.Entry(root)
-entry.pack()
+file_var = tk.StringVar()
 
-btn = tk.Button(root, text="Greet", command=greet)
+btn = tk.Button(root, text="Select File", command=select_file)
 btn.pack()
 
-label_result = tk.Label(root)
-label_result.pack()
+label_file = tk.Label(root, textvariable=file_var)
+label_file.pack()
 
 root.mainloop()
