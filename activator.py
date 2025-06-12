@@ -16,8 +16,21 @@ def select_file():
 def activate():
     url = "http://34.199.190.12:8080/inner/manager/application/assign-radar"
 
-    radars = pd.read_excel(file_var.get())
-    print(type(radars))
+    radars_excel = pd.read_excel(file_var.get(), header=None)
+    radars_list = radars_excel.values.tolist()
+    
+    assures = []
+    wavves = []
+
+    for i in range(1,100):
+        try:
+            assure_database = pd.read_excel(f"Assure{i}.xlsx")
+            #next task: iterate through assure_database by SN and compare with radars_list
+            print("hi")
+        except:
+            exit
+#        for j in radars_list:
+    print("exited")
 
     payload = json.dumps({
    "appId": "XgusEhYd",
