@@ -17,19 +17,30 @@ def activate():
     url = "http://34.199.190.12:8080/inner/manager/application/assign-radar"
 
     radars_excel = pd.read_excel(file_var.get(), header=None)
-    radars_list = radars_excel.values.tolist()
+    radars_list = radars_excel.iloc[:, 0].tolist()
+    assure_database = pd.read_excel("Assures.xlsx", sheet_name="SN-ID-WIFI-BLE")
+    wavve_database = pd.read_excel("Wavves.xlsx" , sheet_name="SN-ID-WIFI-BLE")
+
+    
+    
     
     assures = []
     wavves = []
+    not_found = []
 
-    for i in range(1,100):
-        try:
-            assure_database = pd.read_excel(f"Assure{i}.xlsx")
-            #next task: iterate through assure_database by SN and compare with radars_list
-            print("hi")
-        except:
-            exit
-#        for j in radars_list:
+    for id in radars_list:
+        if id in assure_database["SN"].values:
+            assures.append(id)
+        elif id in wavve_database["SN"].values:
+            wavves.append(id)
+        else:
+            not_found.append(id)
+
+    print(assures)
+    print(wavves)
+    print(not_found)
+        
+    #Next task: get all values per row of SN found, put into seperate list of assures and wavves.
     print("exited")
 
     payload = json.dumps({
